@@ -9,7 +9,40 @@
  * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
- *
+ * 
+ *= require material_icons
  *= require_tree .
  *= require_self
  */
+
+@import 'materialize';
+
+.required {
+  color: red;
+}
+
+.no-margin {
+  margin: 0px !important;
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.flash-msg {
+  padding: 8px 0px;
+  margin: 3px 0px;
+  font-weight: bold;
+}
+
+.error-msg {
+  background-color: #e74c3c;
+}
+
+.warning-msg {
+  background-color: #f39c12;
+}
+
+.success-msg {
+  background-color: #2ecc71;
+}

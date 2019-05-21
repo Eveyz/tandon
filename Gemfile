@@ -6,10 +6,14 @@ ruby '2.6.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 # Use mongodb as the database for Active Record
-gem 'devise', ">= 4.6.0"
+gem 'devise'
 gem 'mongoid', '~> 6.1.1'
 gem 'jwt'
 gem 'bson_ext'
+
+gem 'materialize-sass'
+gem 'material_icons'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

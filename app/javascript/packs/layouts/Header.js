@@ -1,28 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Typography from '@material-ui/core/Typography'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
-import MenuIcon from '@material-ui/icons/Menu'
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import M from 'materialize-css'
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-}
+import { AppContext } from '../AppContext'
 
 const Header = (props) => {
   const { classes } = props
 
+  const [state, setState] = useContext(AppContext)
   const [auth, setAuth] = useState()
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -34,45 +19,19 @@ const Header = (props) => {
     setAnchorEl(e.currentTarget)
   }
 
-  return  <div className={classes.root}>
-            <AppBar>
-              <Toolbar>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                  Tandon
-                </Typography>
-                {true && (
-                  <div>
-                    <IconButton
-                      aria-owns={Boolean(anchorEl) ? 'menu-appbar' : undefined}
-                      aria-haspopup="true"
-                      onClick={handleMenu}
-                      color="inherit"
-                    >
-                      <AccountCircle />
-                    </IconButton>
-                    <Menu
-                      id="menu-appbar"
-                      anchorEl={anchorEl}
-                      anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                      }}
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                  </div>
-                )}
-              </Toolbar>
-            </AppBar>
-          </div>
+  return  <nav>
+            <div className="nav-wrapper teal">
+              <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>Tandon</Link>
+              <ul className="right hide-on-med-and-down">
+                <li><Link to={"/concepts"}>Concepts</Link></li>
+                {state.auth ? 
+                  <li><Link to={"/logout"}>Logout</Link></li> 
+                  : 
+                  <li><Link to={"/login"}>Login</Link></li>
+                }
+              </ul>
+            </div>
+          </nav>
 }
 
-export default withStyles(styles)(Header)
+export default Header
