@@ -17,16 +17,28 @@ class V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    p @user
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      time = Time.now + 24.hours.to_i
+      token = JsonWebToken.encode(user_id: @user._id, exp: time, identity: @user.identity)
+      render json: {
+        token: token,
+        email: @user.email
+      }, status: :ok
+    else
+      render json: { error: 'unauthorized' }, status: :unauthorized
     end
+
+    # respond_to do |format|
+    #   if @user.save
+    #     format.html { redirect_to @user, notice: 'User was successfully created.' }
+    #     format.json { render :show, status: :created, location: @user }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @user.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PUT /users/{username}

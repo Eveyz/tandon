@@ -1,12 +1,30 @@
 import React, { useState } from 'react'
 
-import Header from '../layouts/Header'
-
 const ConceptList = (props) => {
-  const [concepts, setConcepts] = useState([])
-  
+
+  const [mode, setMode] = useState("BROWSE")
+
+  const switchMode = () => {
+    let _mode = mode === "BROWSE" ? "SEARCH" : "BROWSE"
+    setMode(_mode)
+  }
+
   return  <div>
-            <Header />
+            <div className="switch">
+              <label>
+                Browse
+                <input type="checkbox" onChange={switchMode} />
+                <span className="lever"></span>
+                Search
+              </label>
+              {
+                props.data.length > 0 ?
+                props.data.map((c, idx) => {
+                  return <div key={idx}>{c.name}</div>
+                })
+                : <div>No concepts found</div>
+              }
+            </div>
           </div>
 }
 

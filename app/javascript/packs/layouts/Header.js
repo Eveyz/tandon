@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import M from 'materialize-css'
 
 import { AppContext } from '../AppContext'
+import setAuthToken from '../setAuthToken'
+import history from '../history'
 
 const Header = (props) => {
   const { classes } = props
@@ -19,15 +21,30 @@ const Header = (props) => {
     setAnchorEl(e.currentTarget)
   }
 
+  const logout = () => {
+    console.log("logout")
+    localStorage.clear()
+    setAuthToken(false)
+    history.push("/")
+    setState(state => ({auth: false, current_user: null}))
+    M.toast({html: "log out successfully", classes: "green", displayLength: 1000})
+  }
+
   return  <nav>
             <div className="nav-wrapper teal">
               <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>Tandon</Link>
               <ul className="right hide-on-med-and-down">
-                <li><Link to={"/concepts"}>Concepts</Link></li>
-                {state.auth ? 
-                  <li><Link to={"/logout"}>Logout</Link></li> 
+              {state.auth ? 
+                  <React.Fragment>
+                    <li><Link to={"/query"}>Query</Link></li>
+                    <li><Link to={"/concepts"}>Concepts</Link></li>
+                    <li><a href="javascript:;" onClick={logout}>Logout</a></li>
+                  </React.Fragment>
                   : 
-                  <li><Link to={"/login"}>Login</Link></li>
+                  <React.Fragment>
+                    <li><Link to={"/signup"}>Signup</Link></li>
+                    <li><Link to={"/login"}>Login</Link></li>
+                  </React.Fragment>
                 }
               </ul>
             </div>

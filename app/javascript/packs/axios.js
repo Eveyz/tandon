@@ -7,7 +7,7 @@ const ax = axios.create({
       'X-CSRF-Token': token.content
     },
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    // 'Accept': 'application/json',
   }
 })
 
