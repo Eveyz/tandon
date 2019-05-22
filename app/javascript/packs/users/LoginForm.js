@@ -1,25 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
 import M from 'materialize-css'
 import { Formik } from 'formik'
+import axios from '../axios'
 import * as Yup from 'yup'
+// import jwtDecode from 'jwt-decode'
 
 import { FlashMessage } from '../helper/FlashMessage'
+import { AppContext } from '../AppContext'
+import setAuthToken from '../setAuthToken'
 
 const LoginForm = (props) => {
 
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
+  const [state, setState] = useContext(AppContext)
 
   const submit = (values) => {
-    console.log(values)
+    axios.post(`/v1/login`, values)
+    .then((response) => {
+      localStorage.clear()
+      const token = response.data.token;
+      try {
+        localStorage.setItem('jwtToken', token)
+      } catch(err) {
+        throw(err)
+      }
+      setAuthToken(token);
+      setState(state => ({auth: true, current_user: response.data}))
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
   return (
     <Formik
       initialValues={{ 
-        email: props.dataset || '', 
-        password: props.dataset || ''
+        email: props.email || '', 
+        password: props.password || ''
       }}
       onSubmit={(values, { setSubmitting }) => {
         submit(values);

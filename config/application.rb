@@ -5,7 +5,7 @@ require "rails"
 require "active_model/railtie"
 require "active_job/railtie"
 # require "active_record/railtie"
-require "active_storage/engine"
+# require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
@@ -27,9 +27,9 @@ module Tandon
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.to_prepare do
-      DeviseController.respond_to :html, :json
-    end
+    # config.to_prepare do
+    #   DeviseController.respond_to :html, :json
+    # end
 
   end
 end
