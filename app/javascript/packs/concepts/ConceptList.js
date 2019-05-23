@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import ConceptItem from './ConceptItem'
 
 const ConceptList = (props) => {
 
@@ -17,14 +19,23 @@ const ConceptList = (props) => {
                 <span className="lever"></span>
                 Search
               </label>
-              {
-                props.data.length > 0 ?
-                props.data.map((c, idx) => {
-                  return <div key={idx}>{c.name}</div>
-                })
-                : <div>No concepts found</div>
-              }
             </div>
+            {
+              Object.keys(props.data).length > 0 ?
+              <ul>
+                {
+                  props.data["root"].map((c, idx) => {
+                    return <ConceptItem key={idx} totalConcepts={props.data} concept={c} addConcept={props.addConcept} />
+                  })
+                }
+              </ul>
+              : 
+              <div className="card">
+                <div className="card-content">
+                  <h6 className="center">No concepts found</h6>
+                </div>
+              </div>
+            }
           </div>
 }
 

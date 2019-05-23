@@ -3,7 +3,7 @@ class Concept
   include Mongoid::Timestamps
   include Mongoid::Attributes::Dynamic
 
-  field :name, type: String
-  field :description, type: String
+  # field :name, type: String
+  # field :description, type: String
   
 end

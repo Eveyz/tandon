@@ -17,6 +17,10 @@
 
 @import 'materialize';
 
+.clickable {
+  cursor: pointer;
+}
+
 .required {
   color: red;
 }
@@ -55,4 +59,43 @@
 .container-90 {
   width: 90%;
   margin: 0 auto;
+}
+
+.low-level {
+  z-index: 0;
+  position: relative;
+}
+
+ul {
+  list-style-type: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.concept-item {
+  background-color: white;
+  position: relative;
+  z-index: 10;
+  padding: 10px 20px;
+  border: 1px solid #F0F3F4;
+}
+
+.concept-item ul {
+  position: absolute;
+  width: 100%;
+  left: 101%;
+  top: 0px;
+  z-index: 100;
+}
+
+.concept-item:hover {
+  cursor: pointer;
+  background-color: #F0F3F4;
+}
+
+.nested {
+  display: none;
+}
+
+.active-tab {
+  display: block;
 }

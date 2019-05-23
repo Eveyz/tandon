@@ -3,21 +3,32 @@ import React, { useEffect, useState } from 'react'
 import Header from '../layouts/Header'
 import axios from '../axios'
 import ConceptList from '../concepts/ConceptList'
+import ConceptWidget from '../concepts/ConceptWidget'
 
 const QueryDashboard = (props) => {
 
-  const [concepts, setConcepts] = useState([])
-  const [selectedConcepts, setSelectedConcepts] = useState(new Set)
+  const [counts, setCounts] = useState({})
+  const [concepts, setConcepts] = useState({})
+
+  const [selectedConcepts, setSelectedConcepts] = useState([])
 
   useEffect(() => {
     axios.get("/v1/concepts")
     .then((response) => {
-      setConcepts(response.data)
+      setConcepts(response.data.concepts)
     })
     .catch(err => {
       console.log(err)
     })
   }, [])
+
+  const addConcept = (c) => {
+    if(!counts[c._id.$oid]) {
+      setSelectedConcepts([...selectedConcepts, c])
+      counts[c._id.$oid] = true
+      setCounts(counts)
+    }
+  }
 
   return  <div>
             <Header />
@@ -25,12 +36,17 @@ const QueryDashboard = (props) => {
               <div className="row">
                 <div className="col m3">
                   <h5>Concepts</h5>
-                  <ConceptList data={concepts} />
+                  <ConceptList data={concepts} addConcept={addConcept} />
                 </div>
-                <div className="col m9">
+                <div className="col m9 low-level">
                   <h5>Query patient data</h5>
-                  {concepts.size > 0 ? "" :
-                    <div className="card">
+                  {
+                    selectedConcepts.length > 0 ? 
+                    selectedConcepts.map((c, idx) => {
+                      return <ConceptWidget key={idx} concept={c} />
+                    })
+                    :
+                    <div className="card low-level">
                       <div className="card-content">
                         <div className="row no-margin">
                           <div className="col s12 m12">

@@ -1,1 +1,1 @@
-json.array! @concepts, partial: "concepts/concept", as: :concept
+json.concepts @concepts.group_by { |c| c.parent }
