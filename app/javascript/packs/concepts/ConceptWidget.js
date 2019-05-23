@@ -1,22 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import Slider from './Slider'
 
 const ConceptWidget = (props) => {
 
-  const removeConcept = () =>{
-    console.log("clicked")
+  const removeConcept = () => {
+    props.removeConcept(props.concept._id.$oid)
+  }
+
+  var content = ""
+  switch(props.concept.concept_type) {
+    case "categorical":
+      content = <div>categorical variable</div>
+      break;
+    case "numerical":
+      content = <Slider concept={props.concept} />
+      break;
+    default:
+      break;
   }
 
   return  <div className="card">
             <div className="card-content">
-                  <div className="row no-margin">
-                    <div className="col m11 no-padding">
-                      <Link to={`/concepts/${props.concept._id.$oid}`} replace target="_blank"><h5>{props.concept.name}</h5></Link>
-                    </div>
-                    <div className="col m1 no-padding">
-                      <i className="material-icons black-text clickable right" onClick={removeConcept}>close</i>
-                    </div>
-                  </div>
+              <div className="row no-margin">
+                <div className="col m11 no-padding">
+                  <h5 className="no-margin">  
+                    <Link to={`/concepts/${props.concept._id.$oid}`} replace target="_blank">{props.concept.name}</Link>
+                  </h5>
+                </div>
+                <div className="col m1 no-padding">
+                  <i className="material-icons black-text clickable right" onClick={removeConcept}>close</i>
+                </div>
+              </div>
+              {content}
             </div>
           </div>
 }

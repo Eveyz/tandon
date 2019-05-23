@@ -7,6 +7,14 @@ class V1::ConceptsController < ApplicationController
     @concepts = Concept.all
   end
 
+  def find_leaf_concepts
+    @concepts = Concept.where(:concept_type.ne => "hierarchical")
+  end
+
+  def search_concepts
+    @concepts = Concept.where(:concept_type.ne => "hierarchical", name: /.*#{params[:concept_name]}.*/i)
+  end
+
   # GET /concepts/1
   # GET /concepts/1.json
   def show

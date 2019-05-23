@@ -6,7 +6,7 @@ import MainPage from './layouts/MainPage'
 import QueryDashboard from './query/QueryDashboard'
 import Login from './users/Login'
 import Signup from './users/Signup'
-import ConceptList from './concepts/ConceptList'
+import ConceptListContainer from './concepts/ConceptListContainer'
 import { PrivateRoute, LoginRoute } from './requireAuth'
 
 const Routes = (props) => {
@@ -18,7 +18,7 @@ const Routes = (props) => {
       <Route exact path="/query" component={QueryDashboard}></Route>
       <Route exact path="/signup" component={Signup}></Route>
       <LoginRoute exact path="/login" auth={state} component={Login} />
-      <PrivateRoute exact path="/concepts" auth={state} component={ConceptList} />
+      <PrivateRoute exact path="/concepts" auth={state} component={ConceptListContainer} />
     </Switch>
   )
 }

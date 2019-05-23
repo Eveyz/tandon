@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Header from '../layouts/Header'
 import axios from '../axios'
-import ConceptList from '../concepts/ConceptList'
+import ConceptListContainer from '../concepts/ConceptListContainer'
 import ConceptWidget from '../concepts/ConceptWidget'
 
 const QueryDashboard = (props) => {
@@ -27,7 +27,15 @@ const QueryDashboard = (props) => {
       setSelectedConcepts([...selectedConcepts, c])
       counts[c._id.$oid] = true
       setCounts(counts)
+    } else {
+      M.toast({html: "Concept already added", displayLength: 1000})
     }
+  }
+
+  const removeConcept = (c) => {
+    setSelectedConcepts(selectedConcepts.filter(concept => concept._id.$oid !== c))
+    counts[c] = false
+    setCounts(counts)
   }
 
   return  <div>
@@ -36,14 +44,14 @@ const QueryDashboard = (props) => {
               <div className="row">
                 <div className="col m3">
                   <h5>Concepts</h5>
-                  <ConceptList data={concepts} addConcept={addConcept} />
+                  <ConceptListContainer data={concepts} addConcept={addConcept} />
                 </div>
                 <div className="col m9 low-level">
                   <h5>Query patient data</h5>
                   {
                     selectedConcepts.length > 0 ? 
                     selectedConcepts.map((c, idx) => {
-                      return <ConceptWidget key={idx} concept={c} />
+                      return <ConceptWidget key={idx} concept={c} removeConcept={removeConcept} />
                     })
                     :
                     <div className="card low-level">
@@ -56,6 +64,15 @@ const QueryDashboard = (props) => {
                       </div>
                     </div>
                   }
+                  <div className="card low-level">
+                    <div className="card-content">
+                      <div className="row no-margin">
+                        <div className="col s12 m12">
+                          <button className="btn">Query</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

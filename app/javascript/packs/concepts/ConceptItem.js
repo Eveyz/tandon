@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import M from 'materialize-css'
 
 const ConceptItem = (props) => {
 
@@ -28,7 +29,7 @@ const ConceptItem = (props) => {
             {props.concept.name}
             {
               subConcepts && subConcepts.length > 0 ?
-              <ul className={cls}>
+              <ul className={cls + " concepts-list"}>
                 {
                   subConcepts.map((c, idx) => {
                     return <ConceptItem key={idx} addConcept={props.addConcept} totalConcepts={props.totalConcepts} concept={c} />

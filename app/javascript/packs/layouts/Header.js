@@ -22,7 +22,6 @@ const Header = (props) => {
   }
 
   const logout = () => {
-    console.log("logout")
     localStorage.clear()
     setAuthToken(false)
     history.push("/")
@@ -32,7 +31,7 @@ const Header = (props) => {
 
   return  <nav>
             <div className="nav-wrapper teal">
-              <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>Tandon</Link>
+              <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>Pt Reasearch</Link>
               <ul className="right hide-on-med-and-down">
               {state.auth ? 
                   <React.Fragment>
