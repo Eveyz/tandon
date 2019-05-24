@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Slider from './Slider'
+import Categorical from './Categorical'
 
 const ConceptWidget = (props) => {
 
@@ -12,7 +13,7 @@ const ConceptWidget = (props) => {
   var content = ""
   switch(props.concept.concept_type) {
     case "categorical":
-      content = <div>categorical variable</div>
+      content = <Categorical concept={props.concept} />
       break;
     case "numerical":
       content = <Slider concept={props.concept} />
