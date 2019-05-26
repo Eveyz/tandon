@@ -1,5 +1,5 @@
 class V1::ConceptsController < ApplicationController
-  before_action :set_concept, only: [:show, :edit, :update, :destroy]
+  before_action :set_concept, only: [:show, :edit, :update, :destroy, :get_concept_variable_and_domain]
 
   # GET /concepts
   # GET /concepts.json
@@ -13,6 +13,9 @@ class V1::ConceptsController < ApplicationController
 
   def search_concepts
     @concepts = Concept.where(:concept_type.ne => "hierarchical", name: /.*#{params[:concept_name]}.*/i)
+  end
+
+  def get_concept_variable_and_domain
   end
 
   # GET /concepts/1

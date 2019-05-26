@@ -50,4 +50,21 @@ namespace :import_data do
     p "Import patients done"
   end
 
+  desc "Import mapping"
+  task :import_mapping, [:csv_file] => :environment do |task, args|
+    CSV.foreach(args.csv_file, { headers: true, encoding: "iso-8859-1:utf-8" }) do |row|
+      # p row
+      @variable = Variable.find_by(name: row["variable_name"])
+      # p variable
+      if @variable.present?
+        concept = Concept.find_by(name: row["concept_name"])
+        p concept._id
+        @variable["concept_id"] = concept._id if concept.present?
+        @variable["domain"] = row["domain_id"]
+        @variable.save
+      end
+    end
+    p "Import patients done"
+  end
+
 end

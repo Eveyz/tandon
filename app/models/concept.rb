@@ -6,4 +6,6 @@ class Concept
   # field :name, type: String
   # field :description, type: String
   
+  has_many :variables
+
 end

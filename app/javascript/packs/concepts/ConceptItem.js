@@ -26,7 +26,7 @@ const ConceptItem = (props) => {
             onMouseLeave={hideSubConcepts}
             onClick={addConcept}
           >
-            {props.concept.name}
+            {props.concept.display_name}
             {
               subConcepts && subConcepts.length > 0 ?
               <ul className={cls + " concepts-list"}>

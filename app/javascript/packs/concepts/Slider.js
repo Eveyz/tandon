@@ -8,6 +8,7 @@ const Slider = (props) => {
   const [max, setMax] = useState(props.concept.max || "100")
 
   return  <div className="row no-margin">
+            <div id={`concept-${props.concept._id.$oid}`}></div>
             <div className="col m1 no-padding">
               <input
                 value={min} 

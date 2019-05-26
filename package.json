@@ -19,6 +19,7 @@
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
+    "react-spring": "^8.0.20",
     "yup": "^0.27.0"
   },
   "devDependencies": {

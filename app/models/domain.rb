@@ -3,5 +3,5 @@ class Domain
   include Mongoid::Timestamps
   include Mongoid::Attributes::Dynamic
 
-  has_many :variables
+  # has_many :variables
 end

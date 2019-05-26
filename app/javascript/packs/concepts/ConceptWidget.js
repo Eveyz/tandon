@@ -27,7 +27,7 @@ const ConceptWidget = (props) => {
               <div className="row no-margin">
                 <div className="col m11 no-padding">
                   <h5 className="no-margin">  
-                    <Link to={`/concepts/${props.concept._id.$oid}`} replace target="_blank">{props.concept.name}</Link>
+                    <Link to={`/concepts/${props.concept._id.$oid}`} replace target="_blank">{props.concept.display_name}</Link>
                   </h5>
                 </div>
                 <div className="col m1 no-padding">

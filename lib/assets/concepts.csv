@@ -1,40 +1,40 @@
-name,description,parent,concept_type,min,max,unit,deleted
-Electrodes,,root,hierarchical,,,,0
-Hemisphere,,Electrodes,categorical,,,,0
-Scalp Electrodes,,Electrodes,categorical,,,,0
-Electrode Type,,Electrodes,categorical,,,,0
-Patient Montage,,Electrodes,categorical,,,,0
-Standardized Coordinates,,Electrodes,categorical,,,,0
-Clinically Spiking Electrodes,,Electrodes,categorical,,,,0
-Task Spiking Electrodes,,Electrodes,categorical,,,,0
-Line Noise Electrodes,,Electrodes,categorical,,,,0
-Tasks,,root,hierarchical,,,,0
-Tasks Completed,,Tasks,categorical,,,,0
-Usable trials,,Tasks,categorical,,,,0
-CSM,,Tasks,categorical,,,,0
-CCEP,,Tasks,categorical,,,,0
-Dr. Tandon  Stimulation,,Tasks,categorical,,,,0
-fMRI,,Tasks,categorical,,,,0
-Tasks and Runs,,Tasks,categorical,,,,0
-Demographic,,root,hierarchical,,,,0
-Age,,Demographic,numerical,,,,0
-Gender,,Demographic,categorical,,,,0
-IQ,,Demographic,numerical,,,,0
-Reading Scores,,Demographic,categorical,,,,0
-Psychometric Scores,,Demographic,categorical,,,,0
-Handedness,,Demographic,categorical,,,,0
-Primary Language(s),,Demographic,categorical,,,,0
-Age of Acquisition,,Demographic,numerical,,,,0
-Clinical,,root,hierarchical,,,,0
-Dominant Hemisphere,,Clinical,categorical,,,,0
-Determined via: (Wada/fMRI/csm),,Clinical,categorical,,,,0
-SZ onset zone,,Clinical,categorical,,,,0
-NK Data,,Clinical,categorical,,,,0
-Additional Physiological Data,,Clinical,categorical,,,,0
-"Preop Imaging (UT or Hermann, DTI, MRA/CTA, and W and W/O Contrast scans)",,Clinical,categorical,,,,0
-Resection Region,,Clinical,categorical,,,,0
-Age of Epilepsy onset,,Clinical,numerical,,,,0
-Previous surgeries,,Clinical,categorical,,,,0
-Psychological/Neurological Comorbidities,,Clinical,categorical,,,,0
-MRI Related Abnormalities,,Clinical,categorical,,,,0
-Visual Field Reports,,Clinical,categorical,,,,0
+name,display_name,description,parent,concept_type,min,max,unit,deleted
+electrodes,Electrodes,,root,hierarchical,,,,0
+hemisphere,Hemisphere,,electrodes,categorical,,,,0
+scalpElectrodes,Scalp Electrodes,,electrodes,categorical,,,,0
+electrodeType,Electrode Type,,electrodes,categorical,,,,0
+patientMontage,Patient Montage,,electrodes,categorical,,,,0
+standardizedCoordinates,Standardized Coordinates,,electrodes,categorical,,,,0
+clinicallySpikingElectrodes,Clinically Spiking Electrodes,,electrodes,categorical,,,,0
+taskSpikingElectrodes,Task Spiking Electrodes,,electrodes,categorical,,,,0
+lineNoiseElectrodes,Line Noise Electrodes,,electrodes,categorical,,,,0
+tasks,Tasks,,root,hierarchical,,,,0
+tasksCompleted,Tasks Completed,,tasks,categorical,,,,0
+usableTrials,Usable trials,,tasks,categorical,,,,0
+CSM,CSM,,tasks,categorical,,,,0
+CCEP,CCEP,,tasks,categorical,,,,0
+tandonStimulation,Dr. Tandon  Stimulation,,tasks,categorical,,,,0
+fMRI,fMRI,,tasks,categorical,,,,0
+tasksAndRuns,Tasks and Runs,,tasks,categorical,,,,0
+demographic,Demographic,,root,hierarchical,,,,0
+age,Age,,demographic,numerical,,,,0
+gender,Gender,,demographic,categorical,,,,0
+IQ,IQ,,demographic,numerical,,,,0
+readingScores,Reading Scores,,demographic,categorical,,,,0
+psychometricScores,Psychometric Scores,,demographic,categorical,,,,0
+handedness,Handedness,,demographic,categorical,,,,0
+primaryLanguage,Primary Language(s),,demographic,categorical,,,,0
+ageOfAcquisition,Age of Acquisition,,demographic,numerical,,,,0
+clinical,Clinical,,root,hierarchical,,,,0
+dominantHemisphere,Dominant Hemisphere,,clinical,categorical,,,,0
+determinedVia,Determined via: (Wada/fMRI/csm),,clinical,categorical,,,,0
+SZOnsetZone,SZ onset zone,,clinical,categorical,,,,0
+NKData,NK Data,,clinical,categorical,,,,0
+additionalPhysiologicalData,Additional Physiological Data,,clinical,categorical,,,,0
+preopImaging,"Preop Imaging (UT or Hermann, DTI, MRA/CTA, and W and W/O Contrast scans)",,clinical,categorical,,,,0
+resectionRegion,Resection Region,,clinical,categorical,,,,0
+ageOfEpilepsyOnset,Age of Epilepsy onset,,clinical,numerical,,,,0
+previousSurgeries,Previous surgeries,,clinical,categorical,,,,0
+psychologicalNeurologicalComorbidities,Psychological/Neurological Comorbidities,,clinical,categorical,,,,0
+MRIRelatedAbnormalities,MRI Related Abnormalities,,clinical,categorical,,,,0
+VisualFieldReports,Visual Field Reports,,clinical,categorical,,,,0
