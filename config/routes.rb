@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     resources :databases
     resources :domains
     resources :variables
-    resources :patients
+    resources :patients do
+      collection do
+        post :query
+      end
+    end
     resources :concepts do
       collection do
         get :find_leaf_concepts
@@ -19,11 +23,6 @@ Rails.application.routes.draw do
     end
     resources :sessions, only: [:create, :destroy]
   end
-
-  # devise_for :users, controllers: { sessions: 'users/sessions' }
-  # devise_for :users, controllers: { registrations: 'users/registrations' }
-  
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   match "*path", to: "welcome#main", via: :all
 
 end

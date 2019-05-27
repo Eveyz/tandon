@@ -1,1 +1,1 @@
-json.array! @variables, partial: "variables/variable", as: :variable
+json.array! @variables

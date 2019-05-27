@@ -4,7 +4,7 @@ class V1::ConceptsController < ApplicationController
   # GET /concepts
   # GET /concepts.json
   def index
-    @concepts = Concept.all
+    @concepts = Concept.all.map! { |concept| concept.get_variables_and_domains }
   end
 
   def find_leaf_concepts
@@ -12,7 +12,7 @@ class V1::ConceptsController < ApplicationController
   end
 
   def search_concepts
-    @concepts = Concept.where(:concept_type.ne => "hierarchical", name: /.*#{params[:concept_name]}.*/i)
+    @concepts = Concept.where(:concept_type.ne => "hierarchical", name: /.*#{params[:concept_name]}.*/i).map! { |concept| concept.get_variables_and_domains }
   end
 
   def get_concept_variable_and_domain

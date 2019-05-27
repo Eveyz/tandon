@@ -39,7 +39,7 @@ const ConceptListSearch = (props) => {
                 <ul>
                   {
                     concepts.map((c, idx) => {
-                      return <li key={idx} className="concept-item" onClick={addConcept(c)}>{c.name}</li>
+                      return <li key={idx} className="concept-item" onClick={addConcept(c)}>{c.display_name}</li>
                     })
                   }
                 </ul>

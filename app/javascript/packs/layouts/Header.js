@@ -36,7 +36,10 @@ const Header = (props) => {
               {state.auth ? 
                   <React.Fragment>
                     <li><Link to={"/query"}>Query</Link></li>
+                    <li><Link to={"/databases"}>Databases</Link></li>
                     <li><Link to={"/concepts"}>Concepts</Link></li>
+                    <li><Link to={"/domains"}>Domains</Link></li>
+                    <li><Link to={"/variables"}>Variables</Link></li>
                     <li><a href="javascript:;" onClick={logout}>Logout</a></li>
                   </React.Fragment>
                   : 

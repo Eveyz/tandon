@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import Slider from './Slider'
 import Categorical from './Categorical'
+import { CATEGORICAL, NUMERICAL } from '../helper/constants'
 
 const ConceptWidget = (props) => {
 
@@ -12,10 +13,10 @@ const ConceptWidget = (props) => {
 
   var content = ""
   switch(props.concept.concept_type) {
-    case "categorical":
-      content = <Categorical concept={props.concept} />
+    case CATEGORICAL:
+      content = <Categorical concept={props.concept} selectDomain={props.selectDomain} deselectDomain={props.deselectDomain}/>
       break;
-    case "numerical":
+    case NUMERICAL:
       content = <Slider concept={props.concept} />
       break;
     default:

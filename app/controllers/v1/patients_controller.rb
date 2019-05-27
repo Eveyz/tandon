@@ -61,6 +61,22 @@ class V1::PatientsController < ApplicationController
     end
   end
 
+  def query
+    @query = params[:query]
+    @statement = {}
+    @query.each do |db, q|
+      # categorical variables
+      domains = q["domains"].pluck(:value)
+      vs = q["variables"].pluck(:display_name)
+      vs.each do |v|
+        @statement["#{v}"] = {'$in': domains}
+      end
+    end
+    p @statement
+    @patients = Patient.where(@statement)
+    p @patients.size
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
@@ -69,6 +85,6 @@ class V1::PatientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def patient_params
-      params.fetch(:patient, {})
+      params.require(:patient).permit(:query => {})
     end
 end

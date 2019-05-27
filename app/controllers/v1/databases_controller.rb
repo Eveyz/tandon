@@ -29,7 +29,7 @@ class V1::DatabasesController < ApplicationController
     respond_to do |format|
       if @database.save
         format.html { redirect_to @database, notice: 'Database was successfully created.' }
-        format.json { render :show, status: :created, location: @database }
+        format.json { render json: @database, status: :created }
       else
         format.html { render :new }
         format.json { render json: @database.errors, status: :unprocessable_entity }
@@ -69,6 +69,6 @@ class V1::DatabasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def database_params
-      params.fetch(:database, {})
+      params.require(:database).permit(:name, :description)
     end
 end
