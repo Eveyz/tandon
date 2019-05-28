@@ -3,10 +3,10 @@ import React, { useEffect } from 'react'
 const QueryResult = (props) => {
 
   useEffect(() => {
-    console.log(props.queryiedVariables)
+    // console.log(props.queryiedVariables)
   })
 
-  return  <div>
+  return  <div style={{overflowY: "scroll", maxHeight: "600px"}}>
             {
               props.results.length > 0?
               <div>
@@ -20,7 +20,7 @@ const QueryResult = (props) => {
                         props.queryiedVariables.map((v, idx) => {
                           return <th key={idx}>{v}</th>
                         })
-                        : ""
+                        : null
                       }
                     </tr>
                   </thead>
@@ -35,7 +35,7 @@ const QueryResult = (props) => {
                                     props.queryiedVariables.map((v, idx) => {
                                       return <td key={idx}>{r[v]}</td>
                                     })
-                                    : ""
+                                    : null
                                   }
                                 </tr>
                       })

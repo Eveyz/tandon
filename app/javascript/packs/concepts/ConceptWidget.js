@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import Slider from './Slider'
 import Categorical from './Categorical'
+import Numerical from './Numerical'
 import { CATEGORICAL, NUMERICAL } from '../helper/constants'
 
 const ConceptWidget = (props) => {
 
   const removeConcept = () => {
-    props.removeConcept(props.concept._id.$oid)
+    props.removeConcept(props.concept)
   }
 
   var content = ""
@@ -17,7 +17,7 @@ const ConceptWidget = (props) => {
       content = <Categorical concept={props.concept} selectDomain={props.selectDomain} deselectDomain={props.deselectDomain}/>
       break;
     case NUMERICAL:
-      content = <Slider concept={props.concept} />
+      content = <Numerical concept={props.concept} updateRange={props.updateRange} />
       break;
     default:
       break;

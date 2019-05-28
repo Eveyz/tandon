@@ -24,6 +24,7 @@ const Categorical = (props) => {
                             <input 
                               type="checkbox" 
                               className="filled-in" 
+                              defaultChecked={true}
                               onChange={touchDomainCheckbox({
                                 concept_id: props.concept._id.$oid,
                                 variables: props.concept.variables.map(v => {
@@ -42,10 +43,10 @@ const Categorical = (props) => {
                             />
                             <span>{d.display_name}</span>
                           </label>
-                }) : <div className="center">No variables found for current concept</div>
+                }) : <div className="center">No domains found for current variable</div>
               }
               {
-                domains ?
+                props.concept.variables ?
                 <table>
                   <thead>
                     <tr>
@@ -67,7 +68,7 @@ const Categorical = (props) => {
                     }
                   </tbody>
                 </table>
-                : ""
+                : <div className="center">No variables found for current concept</div>
               }
             </div>
           </div>

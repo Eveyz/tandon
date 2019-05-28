@@ -64,12 +64,21 @@ class V1::PatientsController < ApplicationController
   def query
     @query = params[:query]
     @statement = {}
-    @query.each do |db, q|
-      # categorical variables
-      domains = q["domains"].pluck(:value)
-      vs = q["variables"].pluck(:display_name)
-      vs.each do |v|
-        @statement["#{v}"] = {'$in': domains}
+    @query.each do |c, q|
+      if q["range"].present?
+        min_val = q["range"]["min"]
+        max_val = q["range"]["max"]
+        vs = q["variables"].pluck(:display_name)
+        vs.each do |v|
+          @statement["#{v}"] = {'$gte': min_val, '$lte': max_val}
+        end
+      else
+        # categorical variables
+        domains = q["domains"].pluck(:value)
+        vs = q["variables"].pluck(:display_name)
+        vs.each do |v|
+          @statement["#{v}"] = {'$in': domains}
+        end
       end
     end
     p @statement

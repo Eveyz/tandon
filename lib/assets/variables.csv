@@ -1,4 +1,5 @@
 name,display_name,description,variable_type,database,unit,deleted,version
+age,Age,,numerical,pt_research_database,,,
 sex,Sex,,categorical,pt_research_database,,,
 handed,Handed,,categorical,pt_research_database,,,
 subjectType,Subject Type,,categorical,pt_research_database,,,

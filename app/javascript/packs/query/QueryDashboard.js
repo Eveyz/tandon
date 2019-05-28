@@ -21,12 +21,14 @@ import QueryResult from './QueryResult'
 
 const QueryDashboard = (props) => {
 
-  const [counts, setCounts] = useState({})
-  const [concepts, setConcepts] = useState({})
-  const [selectedConcepts, setSelectedConcepts] = useState([])
-  const [queryiedVariables, setqueryiedVariables] = useState(new Set)
-  const [queryStatement, setQueryStatement] = useState({})
-  const [patients, setPatients] = useState([])
+  const [counts, setCounts] = useState({}) // check duplicates
+  const [selectedConcepts, setSelectedConcepts] = useState([]) // selected concepts
+  const [queryiedVariables, setqueryiedVariables] = useState(new Set) // queried variables for results
+  const [queryStatement, setQueryStatement] = useState({}) // query statement, check comments above
+
+  const [concepts, setConcepts] = useState({}) // concepts from the database
+  const [isQuering, setIsQuering] = useState(false) // display loading when is quering
+  const [patients, setPatients] = useState([]) // queried patients data
 
   useEffect(() => {
     axios.get("/v1/concepts")
@@ -43,24 +45,85 @@ const QueryDashboard = (props) => {
       setSelectedConcepts([...selectedConcepts, c])
       counts[c._id.$oid] = true
       setCounts(counts)
+
+      /* add to query variables for display */
+      var qv = queryiedVariables
+      c.variables.forEach(v => {
+        queryiedVariables.add(v.display_name)
+      })
+      setqueryiedVariables(qv)
+      // console.log(qv)
+
+      /* add to query statement */
+      var qs = queryStatement
+      if(c.variables.length > 0) {
+        if(c.concept_type === "categorical") {
+          qs[c._id.$oid] = {
+            variables: c.variables.map(v => {
+              return {
+                variable_id: v._id.$oid,
+                display_name: v.display_name,
+                variable_type: v.variable_type
+              }
+            }),
+            domains: c.variables[0].domains ? c.variables[0].domains.map(d => {
+              return {
+                _id: d._id,
+                domain_id: d.domain_id,
+                value: d.value
+              }
+            }): []
+          }
+        } else if(c.concept_type === "numerical") {
+          qs[c._id.$oid] = {
+            variables: c.variables.map(v => {
+              return {
+                variable_id: v._id.$oid,
+                display_name: v.display_name,
+                variable_type: v.variable_type
+              }
+            }),
+            range: {
+              min: c.min,
+              max: c.max
+            }
+          }
+        }
+        // console.log(qs)
+        setQueryStatement(qs)
+      }
+
+      setPatients([])
     } else {
       M.toast({html: "Concept already added", displayLength: 1000})
     }
   }
 
   const removeConcept = (c) => {
-    setSelectedConcepts(selectedConcepts.filter(concept => concept._id.$oid !== c))
-    counts[c] = false
+    setSelectedConcepts(selectedConcepts.filter(concept => concept._id.$oid !== c._id.$oid))
+    counts[c._id.$oid] = false
     setCounts(counts)
+
+    var qs = queryStatement
+    delete qs[c._id.$oid]
+    setQueryStatement(qs)
+
+    c.variables.forEach(v => {
+      queryiedVariables.delete(v.display_name)
+    })
+
+    setPatients([])
   }
 
   const selectDomain = (queriedVariablesAndDomains) => {
+    /* add query variables for result display */
     var qv = queryiedVariables
     queriedVariablesAndDomains["variables"].forEach(v => {
       queryiedVariables.add(v.display_name)
     })
     setqueryiedVariables(qv)
 
+    /* update query statement to add new domain */
     const concept_id = queriedVariablesAndDomains["concept_id"]
     var qs = queryStatement
     qs[concept_id] = {
@@ -72,6 +135,8 @@ const QueryDashboard = (props) => {
   }
 
   const deselectDomain = (queriedVariablesAndDomains) => {
+    // console.log(queriedVariablesAndDomains)
+    /* remove domain from query statement */
     const concept_id = queriedVariablesAndDomains["concept_id"]
     var qs = queryStatement
     qs[concept_id]["domains"] = queryStatement[concept_id]["domains"].filter(d => 
@@ -81,15 +146,34 @@ const QueryDashboard = (props) => {
     // console.log("deselected: ", queryStatement)
   }
 
+  const updateRange = (conceptAndRanges) => {
+    // console.log("ranges: ", conceptAndRanges)
+    var qs = queryStatement
+    qs[conceptAndRanges["concept_id"]]["range"] = conceptAndRanges["range"]
+    setQueryStatement(qs)
+    // console.log(qs)
+  }
+
   const query = () => {
+    setIsQuering(true)
     axios.post(`/v1/patients/query`, {query: queryStatement})
     .then(response => {
-      console.log(response.data)
+      // console.log(response.data)
       setPatients(response.data)
+      setIsQuering(false)
     })
     .catch(err => {
       console.log(err)
     })
+  }
+
+  const reset = () => {
+    setCounts({})
+    setSelectedConcepts([])
+    setIsQuering(false)
+    setqueryiedVariables(new Set)
+    setQueryStatement({})
+    setPatients([])
   }
 
   return  <div>
@@ -106,11 +190,12 @@ const QueryDashboard = (props) => {
                     selectedConcepts.length > 0 ? 
                     selectedConcepts.map((c, idx) => {
                       return  <ConceptWidget 
-                                key={idx} 
+                                key={`concept-${c._id.$oid}`} 
                                 concept={c} 
                                 removeConcept={removeConcept}
                                 selectDomain={selectDomain}
                                 deselectDomain={deselectDomain}
+                                updateRange={updateRange}
                               />
                     })
                     :
@@ -129,12 +214,20 @@ const QueryDashboard = (props) => {
 
                       <div className="row no-margin">
                         <div className="col s12 m12 no-padding">
-                          <button className="btn" onClick={query}>Query</button>
+                          <button className="btn" disabled={selectedConcepts.length === 0} onClick={query}>Query</button>
+                          <button className="btn white black-text" style={{marginLeft: "20px"}} onClick={reset}>Reset</button>
                         </div>
                       </div>
 
                       <div className="row no-margin">
-                        <QueryResult results={patients} queryiedVariables={[...queryiedVariables]} />
+                        {
+                          isQuering ?
+                          <div className="progress">
+                            <div className="indeterminate"></div>
+                          </div>
+                          :
+                          <QueryResult results={patients} queryiedVariables={[...queryiedVariables]} />
+                        }
                       </div>
 
                     </div>
