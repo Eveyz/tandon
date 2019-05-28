@@ -18,6 +18,10 @@ class V1::ConceptsController < ApplicationController
   def get_concept_variable_and_domain
   end
 
+  def grouped_concepts
+    @concepts = Concept.all.map! { |concept| concept.get_variables_and_domains }
+  end
+
   # GET /concepts/1
   # GET /concepts/1.json
   def show

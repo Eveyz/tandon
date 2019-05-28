@@ -11,6 +11,8 @@ class User
   field :identity,             type: String, default: ""
   field :encrypted_password,   type: String, default: ""
 
+  field :admin,   type: Boolean, default: false
+
   ## Token Authenticatable
   field :authentication_token, type: String, default: ""
 

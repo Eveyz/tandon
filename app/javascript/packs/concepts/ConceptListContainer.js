@@ -1,47 +1,67 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-import ConceptItem from './ConceptItem'
-import ConceptListSearch from './ConceptListSearch'
+import Header from '../layouts/Header'
+import axios from '../axios'
 
 const ConceptListContainer = (props) => {
 
-  const [mode, setMode] = useState("BROWSE")
+  const [concepts, setConcepts] = useState([])
 
-  const switchMode = () => {
-    let _mode = mode === "BROWSE" ? "SEARCH" : "BROWSE"
-    setMode(_mode)
-  }
+  useEffect(() => {
+    axios.get("/v1/concepts/find_leaf_concepts")
+    .then(response => {
+      console.log(response)
+      setConcepts(response.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
 
   return  <div>
-            <div className="switch">
-              <label>
-                Browse
-                <input type="checkbox" onChange={switchMode} />
-                <span className="lever"></span>
-                Search
-              </label>
-            </div>
-            {
-              Object.keys(props.data).length > 0 ?
-              mode === "BROWSE" ?
-              <ul className="concepts-list">
-                {
-                  props.data["root"].map((c, idx) => {
-                    return <ConceptItem key={idx} totalConcepts={props.data} concept={c} addConcept={props.addConcept} />
-                  })
-                }
-              </ul>
-              :
-              <ConceptListSearch addConcept={props.addConcept} />
-              : 
-              <div className="card">
-                <div className="card-content">
-                  <div className="progress">
-                    <div className="indeterminate"></div>
+            <Header />
+            <div className="container">
+              <h5>Concepts</h5>
+              <Link to={"/concepts/new"} className="btn"><i className="material-icons left">add</i>Add new concept</Link>
+              {
+                concepts.length > 0 ?
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {
+                      concepts.map((c, idx) => {
+                        return  <tr key={idx}>
+                                  <td><Link to={`/concepts/${c._id.$oid}`}>{c.display_name}</Link></td>
+                                  <td>{c.description}</td>
+                                  <td>
+                                    <i className="material-icons left blue-text">edit</i>
+                                    <i className="material-icons left red-text">delete</i>
+                                  </td>
+                                </tr>
+                      })
+                    }
+                  </tbody>
+                </table>
+                :
+                <div className="row">
+                  <div className="col s12 m12 no-padding">
+                    <div className="card">
+                      <div className="card-content">
+                        <h5 className="center">No concepts found</h5>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            }
+              }
+            </div>
           </div>
 }
 

@@ -43,8 +43,8 @@ const DomainListContainer = (props) => {
                                   <td>{d.display_name}</td>
                                   <td>{d.value}</td>
                                   <td>
-                                    <i className="material-icons left">edit</i>
-                                    <i className="material-icons left">delete</i>
+                                    <i className="material-icons left blue-text">edit</i>
+                                    <i className="material-icons left red-text">delete</i>
                                   </td>
                                 </tr>
                       })

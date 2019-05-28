@@ -13,6 +13,14 @@ const Header = (props) => {
   const [auth, setAuth] = useState()
   const [anchorEl, setAnchorEl] = useState(null)
 
+  useEffect(() => {
+    var elems = document.querySelectorAll('.dropdown-trigger')
+    var instances = M.Dropdown.init(elems, {
+      "alignment": 'left',
+      "coverTrigger": false
+    })
+  }, [])
+
   function handleClose() {
     setAnchorEl(null)
   }
@@ -30,16 +38,15 @@ const Header = (props) => {
   }
 
   return  <nav>
-            <div className="nav-wrapper teal">
+            <div className="nav-wrapper blue-grey">
               <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>Pt Reasearch</Link>
               <ul className="right hide-on-med-and-down">
               {state.auth ? 
                   <React.Fragment>
-                    <li><Link to={"/query"}>Query</Link></li>
-                    <li><Link to={"/databases"}>Databases</Link></li>
+                    <li><Link to={"/query"}>Query builder</Link></li>
                     <li><Link to={"/concepts"}>Concepts</Link></li>
-                    <li><Link to={"/domains"}>Domains</Link></li>
-                    <li><Link to={"/variables"}>Variables</Link></li>
+                    <li><Link to={"/patients"}>Patients</Link></li>
+                    <li><a className='dropdown-trigger' href='#' data-target='admin-menu'>Admin<i className="material-icons right" style={{marginLeft: "2px"}}>arrow_drop_down</i></a></li>
                     <li><a href="javascript:;" onClick={logout}>Logout</a></li>
                   </React.Fragment>
                   : 
@@ -48,6 +55,12 @@ const Header = (props) => {
                     <li><Link to={"/login"}>Login</Link></li>
                   </React.Fragment>
                 }
+              </ul>
+
+              <ul id='admin-menu' className='dropdown-content'>
+                <li><Link to={"/databases"}>Databases</Link></li>
+                <li><Link to={"/domains"}>Domains</Link></li>
+                <li><Link to={"/variables"}>Variables</Link></li>
               </ul>
             </div>
           </nav>

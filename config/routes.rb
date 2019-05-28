@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
     resources :concepts do
       collection do
+        get :grouped_concepts
         get :find_leaf_concepts
         get :search_concepts
       end

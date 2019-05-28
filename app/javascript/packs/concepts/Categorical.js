@@ -16,7 +16,6 @@ const Categorical = (props) => {
 
   return  <div className="row no-margin" style={{paddingTop: "10px"}}>
             <div className="col m12 no-padding">
-              <br/>
               {
                 domains ?
                 domains.map((d, idx) => {
@@ -46,11 +45,11 @@ const Categorical = (props) => {
                 }) : <div className="center">No domains found for current variable</div>
               }
               {
-                props.concept.variables ?
+                props.concept.variables.length > 0 ?
                 <table>
                   <thead>
                     <tr>
-                      <th>Name</th>
+                      <th>Variable Name</th>
                       <th>Description</th>
                       <th>Database</th>
                     </tr>

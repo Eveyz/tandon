@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Header from '../layouts/Header'
 import axios from '../axios'
-import ConceptListContainer from '../concepts/ConceptListContainer'
+import HierarchicalConceptList from '../concepts/HierarchicalConceptList'
 import ConceptWidget from '../concepts/ConceptWidget'
 import QueryResult from './QueryResult'
 
@@ -176,13 +176,17 @@ const QueryDashboard = (props) => {
     setPatients([])
   }
 
+  const save = () => {
+
+  }
+
   return  <div>
             <Header />
             <div className="container-90">
               <div className="row">
                 <div className="col m3">
                   <h5>Concepts</h5>
-                  <ConceptListContainer data={concepts} addConcept={addConcept} />
+                  <HierarchicalConceptList data={concepts} addConcept={addConcept} />
                 </div>
                 <div className="col m9 low-level">
                   <h5>Query patient data</h5>
@@ -214,8 +218,9 @@ const QueryDashboard = (props) => {
 
                       <div className="row no-margin">
                         <div className="col s12 m12 no-padding">
-                          <button className="btn" disabled={selectedConcepts.length === 0} onClick={query}>Query</button>
-                          <button className="btn white black-text" style={{marginLeft: "20px"}} onClick={reset}>Reset</button>
+                          <button className="btn blue" disabled={selectedConcepts.length === 0} onClick={query}><i className="material-icons left">query_builder</i>Query</button>
+                          <button className="btn white black-text" style={{marginLeft: "20px"}} disabled={selectedConcepts.length === 0} onClick={reset}><i className="material-icons left">refresh</i>Reset</button>
+                          <button className="btn cyan" style={{marginLeft: "20px"}} disabled={selectedConcepts.length === 0} onClick={save}><i className="material-icons left">save</i>Save Query</button>
                         </div>
                       </div>
 
