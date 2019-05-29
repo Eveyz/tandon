@@ -28,7 +28,7 @@ const QueryDashboard = (props) => {
 
   const [concepts, setConcepts] = useState({}) // concepts from the database
   const [isQuering, setIsQuering] = useState(false) // display loading when is quering
-  const [patients, setPatients] = useState([]) // queried patients data
+  const [patients, setPatients] = useState(null) // queried patients data
 
   useEffect(() => {
     axios.get("/v1/concepts")
@@ -93,7 +93,7 @@ const QueryDashboard = (props) => {
         setQueryStatement(qs)
       }
 
-      setPatients([])
+      setPatients(null)
     } else {
       M.toast({html: "Concept already added", displayLength: 1000})
     }
@@ -173,7 +173,7 @@ const QueryDashboard = (props) => {
     setIsQuering(false)
     setqueryiedVariables(new Set)
     setQueryStatement({})
-    setPatients([])
+    setPatients(null)
   }
 
   const save = () => {
@@ -218,9 +218,9 @@ const QueryDashboard = (props) => {
 
                       <div className="row no-margin">
                         <div className="col s12 m12 no-padding">
-                          <button className="btn blue" disabled={selectedConcepts.length === 0} onClick={query}><i className="material-icons left">query_builder</i>Query</button>
-                          <button className="btn white black-text" style={{marginLeft: "20px"}} disabled={selectedConcepts.length === 0} onClick={reset}><i className="material-icons left">refresh</i>Reset</button>
-                          <button className="btn cyan" style={{marginLeft: "20px"}} disabled={selectedConcepts.length === 0} onClick={save}><i className="material-icons left">save</i>Save Query</button>
+                          <button className="btn blue" disabled={selectedConcepts.length === 0 || isQuering} onClick={query}><i className="material-icons left">query_builder</i>Query</button>
+                          <button className="btn white black-text" style={{marginLeft: "20px"}} disabled={selectedConcepts.length === 0 || isQuering} onClick={reset}><i className="material-icons left">refresh</i>Reset</button>
+                          <button className="btn cyan" style={{marginLeft: "20px"}} disabled={selectedConcepts.length === 0 || isQuering} onClick={save}><i className="material-icons left">save</i>Save Query</button>
                         </div>
                       </div>
 

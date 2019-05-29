@@ -5,16 +5,18 @@ import { CSVLink } from 'react-csv'
 const QueryResult = (props) => {
 
   const [data, setData] = useState(() => {
-    const header = ["Study Number", ...props.queryiedVariables]
-    var res = [header]
-    props.results.forEach(patient => {
-      var tmp = []
-      header.forEach(field => {
-        tmp.push(patient[field])
+    if(props.results) {
+      const header = ["Study Number", ...props.queryiedVariables]
+      var res = [header]
+      props.results.forEach(patient => {
+        var tmp = []
+        header.forEach(field => {
+          tmp.push(patient[field])
+        })
+        res.push(tmp)
       })
-      res.push(tmp)
-    })
-    return res
+      return res
+    }
   })
 
   useEffect(() => {
@@ -22,7 +24,8 @@ const QueryResult = (props) => {
   }, [])
 
   return  <div>
-            {
+            { 
+              props.results ?
               props.results.length > 0?
               <div>
                 <br/>
@@ -78,6 +81,7 @@ const QueryResult = (props) => {
               </div>
               :
               <h5 className="center">No reuslts found</h5>
+              : null
             }
           </div>
 }
