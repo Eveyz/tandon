@@ -34,12 +34,12 @@ const Header = (props) => {
     setAuthToken(false)
     history.push("/")
     setState(state => ({auth: false, current_user: null}))
-    M.toast({html: "log out successfully", classes: "green", displayLength: 1000})
+    M.toast({html: "Log out successfully", classes: "green", displayLength: 1000})
   }
 
   return  <nav>
             <div className="nav-wrapper blue-grey">
-              <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>Pt Reasearch</Link>
+              <Link to={"/"} className="brand-logo" style={{paddingLeft: "24px"}}>EpiSurgery</Link>
               <ul className="right hide-on-med-and-down">
               {state.auth ? 
                   <React.Fragment>

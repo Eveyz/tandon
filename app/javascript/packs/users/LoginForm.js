@@ -4,6 +4,7 @@ import { Formik } from 'formik'
 import axios from '../axios'
 import * as Yup from 'yup'
 
+import history from '../history'
 import { FlashMessage } from '../helper/FlashMessage'
 import { AppContext } from '../AppContext'
 import setAuthToken from '../setAuthToken'
@@ -24,6 +25,8 @@ const LoginForm = (props) => {
       }
       setAuthToken(token)
       setState(state => ({auth: true, current_user: response.data}))
+      history.push('/query')
+      M.toast({html: "Welcome back!", displayLength: 1000, classes: "green"})
     }).catch((error) => {
       console.log(error)
     })

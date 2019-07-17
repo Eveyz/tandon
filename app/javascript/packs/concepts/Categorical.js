@@ -14,6 +14,30 @@ const Categorical = (props) => {
     props.deselectDomain(queriedVariablesAndDomains)
   }
 
+  const variables = props.concept.variables.length > 0 ?
+  <table>
+    <thead>
+      <tr>
+        <th>Variable Name</th>
+        <th>Description</th>
+        <th>Database</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {
+        props.concept.variables.map((v, idx) => {
+          return  <tr key={idx}>
+                    <td>{v.display_name}</td>
+                    <td>{v.description}</td>
+                    <td>research database</td>
+                  </tr>
+        })
+      }
+    </tbody>
+  </table>
+  : <div className="center">No variables found for current concept</div>
+
   return  <div className="row no-margin" style={{paddingTop: "10px"}}>
             <div className="col m12 no-padding">
               {
@@ -43,31 +67,6 @@ const Categorical = (props) => {
                             <span>{d.display_name}</span>
                           </label>
                 }) : <div className="center">No domains found for current variable</div>
-              }
-              {
-                props.concept.variables.length > 0 ?
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Variable Name</th>
-                      <th>Description</th>
-                      <th>Database</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {
-                      props.concept.variables.map((v, idx) => {
-                        return  <tr key={idx}>
-                                  <td>{v.display_name}</td>
-                                  <td>{v.description}</td>
-                                  <td>{v.variable_type}</td>
-                                </tr>
-                      })
-                    }
-                  </tbody>
-                </table>
-                : <div className="center">No variables found for current concept</div>
               }
             </div>
           </div>

@@ -112,7 +112,7 @@ const QueryDashboard = (props) => {
       queryiedVariables.delete(v.display_name)
     })
 
-    setPatients([])
+    setPatients(null)
   }
 
   const selectDomain = (queriedVariablesAndDomains) => {

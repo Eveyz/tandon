@@ -24,7 +24,7 @@ const PatientListContainer = (props) => {
             <Header />
             <div className="container">
               <h5>Patients</h5>
-              <Link to={"/patients/new"} className="btn"><i className="material-icons left">add</i>Add new patient</Link>
+              <Link to={"/patients/new"} className="btn"><i className="material-icons left">add</i>Add a new patient record</Link>
               {
                 patients.length > 0 ?
                 <PaginationContainer 
