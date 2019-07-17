@@ -2,7 +2,7 @@ require 'csv'
 
 # rails "import_data:import_concepts[G:/projects/tandon/lib/assets/concepts.csv]"
 
-# rails "import_data:import_concepts[/Users/eveyvonne/Documents/projects/tandon/tandon/lib/assets/concepts.csv]"
+# rails "import_data:import_concepts[/Users/eveyvonne/Documents/projects/tandon/EpiSurgery/lib/assets/concepts.csv]"
 
 namespace :import_data do
   desc "Import concept"
